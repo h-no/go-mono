@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/h-no/go-mono/libs/go/bar"
 
 func main() {
-	fmt.Print("hello")
+	bar.Hello()
 }
