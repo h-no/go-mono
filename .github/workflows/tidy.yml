@@ -17,9 +17,12 @@ jobs:
 
       - name: Tidy up after Renovate
         run: |
-          for file in $(git diff-tree --no-commit-id --name-only -r ${{ GITHUB_REF }} | grep --color=never go.mod); do \
+          for file in $(git diff-tree --no-commit-id --name-only -r ${GITHUB_REF} | grep --color=never go.mod); do \
+            dirname $file; \
             cd "$( dirname "$file" )"; \
+            echo $PWD; \
             go mod tidy -compat=1.17; \
+            touch hej; \
             cd -; \
           done
 
