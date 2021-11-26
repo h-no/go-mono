@@ -26,6 +26,8 @@ jobs:
           echo "******"
           git show ${GITHUB_SHA} --stat
           echo "******"
+          git log --oneline
+          echo "******"
           git diff-tree --no-commit-id --name-only -r ${GITHUB_REF} main
           echo "******"
 
