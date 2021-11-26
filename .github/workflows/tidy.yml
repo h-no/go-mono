@@ -22,16 +22,11 @@ jobs:
       - name: Tidy up after Renovate
         shell: bash
         run: |
-          echo $PWD
-          echo "******"
-          ls -l
-          echo "******"
           git show ${GITHUB_SHA} --stat
-          echo "******"
-          git log --oneline
           echo "******"
           git diff-tree --no-commit-id --name-only -r HEAD
           echo "******"
+          git diff-tree --no-commit-id --name-only -r HEAD| grep --color=never go.mod | xargs -0 -I % bash -c 'cd $(dirname %) && go mod tidy -compat=1.17 && cd -;'
 
       - name: Commit and push
         uses: devops-infra/action-commit-push@v0.3
