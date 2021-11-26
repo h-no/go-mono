@@ -1,0 +1,30 @@
+name: Renovate Tidy
+on:
+  push:
+    branches:
+      - 'renovate/**/*'
+jobs:
+  tidy-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ~1.17
+
+      - name: Tidy up after Renovate
+        run: |
+          for file in $(git diff-tree --no-commit-id --name-only -r HEAD | grep --color=never go.mod); do \
+            cd "$( dirname "$file" )"; \
+            go mod tidy -compat=1.17; \
+            cd -; \
+          done
+
+      - name: Commit and push
+        uses: devops-infra/action-commit-push@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Run go mod tidy
