@@ -28,7 +28,7 @@ jobs:
           echo "******"
           git log --oneline
           echo "******"
-          git diff-tree --no-commit-id --name-only -r ${GITHUB_REF} main
+          git diff-tree --no-commit-id --name-only -r ${GITHUB_REF}
           echo "******"
 
       - name: Commit and push
