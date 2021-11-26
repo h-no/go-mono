@@ -22,6 +22,8 @@ jobs:
           echo "******"
           ls -l
           echo "******"
+          git show
+          echo "******"
           git diff-tree --no-commit-id --name-only -r ${GITHUB_REF}
           echo "******"
 
