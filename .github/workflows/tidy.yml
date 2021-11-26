@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: ${GITHUB_REF}
+          ref: ${{ GITHUB_REF }}
 
       - name: Set up Go
         uses: actions/setup-go@v2
