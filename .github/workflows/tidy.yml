@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        ref: ${{GITHUB_REF}}
+        with:
+          ref: ${{GITHUB_REF}}
 
       - name: Set up Go
         uses: actions/setup-go@v2
