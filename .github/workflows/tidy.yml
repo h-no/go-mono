@@ -16,7 +16,8 @@ jobs:
           go-version: ~1.17
 
       - name: Tidy up after Renovate
-        run: git diff-tree --no-commit-id --name-only -r HEAD | grep --color=never go.mod | xargs -0 -I % bash -c 'cd $(dirname %) && echo $PWD && cd -;'
+        shell: bash
+        run: git diff-tree --no-commit-id --name-only -r HEAD #| grep --color=never go.mod | xargs -0 -I % bash -c 'cd $(dirname %) && echo $PWD && cd -;'
           # for file in $(git diff-tree --no-commit-id --name-only -r ${GITHUB_REF} | grep --color=never go.mod); do \
           #   dirname $file; \
           #   cd "$( dirname "$file" )"; \
