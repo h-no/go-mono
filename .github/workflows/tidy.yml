@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -16,18 +18,15 @@ jobs:
           go-version: ~1.17
 
       - name: Tidy up after Renovate
+        shell: bash
         run: |
-          for file in $(git diff-tree --no-commit-id --name-only -r ${GITHUB_REF} | grep --color=never go.mod); do \
-            dirname $file; \
+          for file in $(git diff-tree --no-commit-id --name-only -r HEAD | grep --color=never go.mod); do \
             cd "$( dirname "$file" )"; \
-            echo $PWD; \
             go mod tidy -compat=1.17; \
-            touch hej; \
             cd -; \
           done
-
       - name: Commit and push
-        uses: devops-infra/action-commit-push@v0.3
+        uses: devops-infra/action-commit-push@v0.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Run go mod tidy
