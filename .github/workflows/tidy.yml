@@ -26,8 +26,13 @@ jobs:
           echo "******"
           git diff-tree --no-commit-id --name-only -r HEAD
           echo "******"
-          git diff-tree --no-commit-id --name-only -r HEAD| grep --color=never go.mod | xargs -0 -I % bash -c 'cd $(dirname %) && go mod tidy -compat=1.17 && cd -;'
-
+          for file in $(git diff-tree --no-commit-id --name-only -r HEAD | grep --color=never go.mod); do \
+            dirname $file; \
+            cd "$( dirname "$file" )"; \
+            echo $PWD; \
+            go mod tidy -compat=1.17; \
+            cd -; \
+          done
       - name: Commit and push
         uses: devops-infra/action-commit-push@v0.3
         with:
